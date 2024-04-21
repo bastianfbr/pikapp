@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Thumbnail from "./components/thumbnail";
 
 export default function ThumbnailGenerator() {
@@ -15,10 +15,28 @@ export default function ThumbnailGenerator() {
       alert("Please enter a Play Store link");
       return;
     }
-    setIconSrc("/app-icon.png");
-    setQrcodeSrc("/qr-code.png");
-    setAppName("App Name");
-    setAppPrice("Free");
+    fetchIconFromServer(playStoreLink);
+  };
+
+  const fetchIconFromServer = (url: string) => {
+    fetch(`/api/fetch-html?url=${encodeURIComponent(url)}`)
+      .then((response) => response.text())
+      .then((html) => {
+        const match = /<div class="Mqg6jb Mhrnjf"><img src="(.+?)"/.exec(html);
+        if (match) {
+          setIconSrc(match[1]);
+          setAppName("App Name");
+          setAppPrice("Free");
+          setQrcodeSrc("/qr-code.png");
+        } else {
+          console.error("Icon not found");
+          alert("Icon not found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching icon:", error);
+        alert("Failed to fetch icon");
+      });
   };
 
   return (
