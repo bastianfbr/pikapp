@@ -31,3 +31,19 @@ body {
     text-wrap: balance;
   }
 }
+
+.thumbnail {
+  position: relative;
+  width: 398px;
+  height: 130px;
+}
+
+.thumbnail-icon {
+  top: 16px;
+  left: 20px;
+}
+
+.thumbnail-qrcode {
+  top: 32px;
+  left: 310px;
+}
