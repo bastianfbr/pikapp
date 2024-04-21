@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
+import Thumbnail from "./components/thumbnail";
 
 export default function ThumbnailGenerator() {
   const [playStoreLink, setPlayStoreLink] = useState("");
@@ -12,7 +12,7 @@ export default function ThumbnailGenerator() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="flex flex-col min-h-screen items-center justify-center bg-gray-100">
       <div className="p-8 bg-white shadow-md rounded-lg">
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -31,18 +31,8 @@ export default function ThumbnailGenerator() {
             </button>
           </div>
         </form>
-        {imageSrc && (
-          <div className="mt-4">
-            <Image
-              src={imageSrc}
-              width={400}
-              height={200}
-              alt="Generated App Preview"
-              className="max-w-full rounded-lg shadow-lg"
-            />
-          </div>
-        )}
       </div>
+      <div className="mt-8">{imageSrc && <Thumbnail />}</div>
     </div>
   );
 }
