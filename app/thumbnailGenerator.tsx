@@ -4,11 +4,21 @@ import Thumbnail from "./components/thumbnail";
 
 export default function ThumbnailGenerator() {
   const [playStoreLink, setPlayStoreLink] = useState("");
-  const [imageSrc, setImageSrc] = useState("");
+  const [iconSrc, setIconSrc] = useState("");
+  const [appName, setAppName] = useState("");
+  const [appPrice, setAppPrice] = useState("");
+  const [qrcodeSrc, setQrcodeSrc] = useState("");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    setImageSrc("/placeholder.jpeg");
+    if (!playStoreLink) {
+      alert("Please enter a Play Store link");
+      return;
+    }
+    setIconSrc("/app-icon.png");
+    setQrcodeSrc("/qr-code.png");
+    setAppName("App Name");
+    setAppPrice("Free");
   };
 
   return (
@@ -18,7 +28,7 @@ export default function ThumbnailGenerator() {
           <input
             type="text"
             placeholder="Enter Play Store Link"
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             value={playStoreLink}
             onChange={(e) => setPlayStoreLink(e.target.value)}
           />
@@ -32,7 +42,18 @@ export default function ThumbnailGenerator() {
           </div>
         </form>
       </div>
-      <div className="mt-8">{imageSrc && <Thumbnail />}</div>
+      <div className="mt-8">
+        {iconSrc && qrcodeSrc ? (
+          <Thumbnail
+            name={appName}
+            price={appPrice}
+            icon={iconSrc}
+            qrcode={qrcodeSrc}
+          />
+        ) : (
+          <div className="text-gray-500">No image to display</div>
+        )}
+      </div>
     </div>
   );
 }
